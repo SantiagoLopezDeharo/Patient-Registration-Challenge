@@ -6,9 +6,9 @@ import { LoaderCircle } from 'lucide-react';
 
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Button } from '@/components/button';
+import { Input } from '@/components/input';
+import * as LabelPrimitive from '@radix-ui/react-label';
 import AuthLayout from '@/layouts/auth-layout';
 
 export default function ForgotPassword({ status }: { status?: string }) {
@@ -30,7 +30,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
                     {({ processing, errors }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
+                                <LabelPrimitive.Root htmlFor="email" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Email address</LabelPrimitive.Root>
                                 <Input
                                     id="email"
                                     type="email"

@@ -1,31 +1,26 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Icon } from '@/components/icon';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import * as AvatarPrimitive from '@radix-ui/react-avatar';
+import { Button } from '@/components/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@/components/dropdown-menu';
 import {
     NavigationMenu,
     NavigationMenuItem,
     NavigationMenuList,
     navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu';
+} from '@/components/navigation-menu';
 import {
     Sheet,
     SheetContent,
     SheetHeader,
     SheetTitle,
     SheetTrigger,
-} from '@/components/ui/sheet';
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from '@/components/ui/tooltip';
+} from '@/components/sheet';
+import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { UserMenuContent } from '@/components/user-menu-content';
 import { useInitials } from '@/hooks/use-initials';
 import { useActiveUrl } from '@/hooks/use-active-url';
@@ -194,12 +189,12 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                             </Button>
                             <div className="hidden lg:flex">
                                 {rightNavItems.map((item) => (
-                                    <TooltipProvider
+                                    <TooltipPrimitive.Provider
                                         key={item.title}
                                         delayDuration={0}
                                     >
-                                        <Tooltip>
-                                            <TooltipTrigger>
+                                        <TooltipPrimitive.Root>
+                                            <TooltipPrimitive.Trigger asChild>
                                                 <a
                                                     href={toUrl(item.href)}
                                                     target="_blank"
@@ -216,12 +211,12 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                                                         />
                                                     )}
                                                 </a>
-                                            </TooltipTrigger>
-                                            <TooltipContent>
+                                            </TooltipPrimitive.Trigger>
+                                            <TooltipPrimitive.Content className="z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2">
                                                 <p>{item.title}</p>
-                                            </TooltipContent>
-                                        </Tooltip>
-                                    </TooltipProvider>
+                                            </TooltipPrimitive.Content>
+                                        </TooltipPrimitive.Root>
+                                    </TooltipPrimitive.Provider>
                                 ))}
                             </div>
                         </div>
@@ -231,15 +226,16 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                                     variant="ghost"
                                     className="size-10 rounded-full p-1"
                                 >
-                                    <Avatar className="size-8 overflow-hidden rounded-full">
-                                        <AvatarImage
+                                    <AvatarPrimitive.Root className="size-8 relative flex shrink-0 overflow-hidden rounded-full">
+                                        <AvatarPrimitive.Image
+                                            className="aspect-square size-full"
                                             src={auth.user.avatar}
                                             alt={auth.user.name}
                                         />
-                                        <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                        <AvatarPrimitive.Fallback className="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
                                             {getInitials(auth.user.name)}
-                                        </AvatarFallback>
-                                    </Avatar>
+                                        </AvatarPrimitive.Fallback>
+                                    </AvatarPrimitive.Root>
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-56" align="end">

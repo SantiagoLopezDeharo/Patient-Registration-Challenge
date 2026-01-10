@@ -1,11 +1,4 @@
-import { Button } from '@/components/ui/button';
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card';
+import { Button } from '@/components/button';
 import { regenerateRecoveryCodes } from '@/routes/two-factor';
 import { Form } from '@inertiajs/react';
 import { Eye, EyeOff, LockKeyhole, RefreshCw } from 'lucide-react';
@@ -53,18 +46,18 @@ export default function TwoFactorRecoveryCodes({
     const RecoveryCodeIconComponent = codesAreVisible ? EyeOff : Eye;
 
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle className="flex gap-3">
+        <div className="rounded-xl border bg-card text-card-foreground shadow">
+            <div className="flex flex-col space-y-1.5 p-6">
+                <h3 className="flex gap-3 font-semibold leading-none tracking-tight">
                     <LockKeyhole className="size-4" aria-hidden="true" />
                     2FA Recovery Codes
-                </CardTitle>
-                <CardDescription>
+                </h3>
+                <p className="text-sm text-muted-foreground">
                     Recovery codes let you regain access if you lose your 2FA
                     device. Store them in a secure password manager.
-                </CardDescription>
-            </CardHeader>
-            <CardContent>
+                </p>
+            </div>
+            <div className="p-6 pt-0">
                 <div className="flex flex-col gap-3 select-none sm:flex-row sm:items-center sm:justify-between">
                     <Button
                         onClick={toggleCodesVisibility}
@@ -158,7 +151,7 @@ export default function TwoFactorRecoveryCodes({
                         )}
                     </div>
                 </div>
-            </CardContent>
-        </Card>
+            </div>
+        </div>
     );
 }

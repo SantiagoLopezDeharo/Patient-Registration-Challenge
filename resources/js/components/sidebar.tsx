@@ -5,23 +5,17 @@ import { PanelLeftCloseIcon, PanelLeftOpenIcon } from "lucide-react"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Separator } from "@/components/ui/separator"
+import { Button } from "@/components/button"
+import { Input } from "@/components/input"
+import { Separator } from "@/components/separator"
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@/components/ui/sheet"
-import { Skeleton } from "@/components/ui/skeleton"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/components/sheet"
+import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -126,7 +120,7 @@ function SidebarProvider({
 
   return (
     <SidebarContext.Provider value={contextValue}>
-      <TooltipProvider delayDuration={0}>
+      <TooltipPrimitive.Provider delayDuration={0}>
         <div
           data-slot="sidebar-wrapper"
           style={
@@ -144,7 +138,7 @@ function SidebarProvider({
         >
           {children}
         </div>
-      </TooltipProvider>
+      </TooltipPrimitive.Provider>
     </SidebarContext.Provider>
   )
 }
@@ -501,7 +495,7 @@ function SidebarMenuButton({
 }: React.ComponentProps<"button"> & {
   asChild?: boolean
   isActive?: boolean
-  tooltip?: string | React.ComponentProps<typeof TooltipContent>
+  tooltip?: string | React.ComponentProps<typeof TooltipPrimitive.Content>
 } & VariantProps<typeof sidebarMenuButtonVariants>) {
   const Comp = asChild ? Slot : "button"
   const { isMobile, state } = useSidebar()
@@ -528,15 +522,16 @@ function SidebarMenuButton({
   }
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>{button}</TooltipTrigger>
-      <TooltipContent
+    <TooltipPrimitive.Root>
+      <TooltipPrimitive.Trigger asChild>{button}</TooltipPrimitive.Trigger>
+      <TooltipPrimitive.Content
         side="right"
         align="center"
         hidden={state !== "collapsed" || isMobile}
+        className="z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
         {...tooltip}
       />
-    </Tooltip>
+    </TooltipPrimitive.Root>
   )
 }
 
@@ -618,13 +613,13 @@ function SidebarMenuSkeleton({
       {...props}
     >
       {showIcon && (
-        <Skeleton
-          className="size-4 rounded-md"
+        <div
+          className="size-4 rounded-md animate-pulse bg-primary/10"
           data-sidebar="menu-skeleton-icon"
         />
       )}
-      <Skeleton
-        className="h-4 max-w-(--skeleton-width) flex-1"
+      <div
+        className="h-4 max-w-(--skeleton-width) flex-1 animate-pulse bg-primary/10 rounded-sm"
         data-sidebar="menu-skeleton-text"
         style={skeletonStyle}
       />

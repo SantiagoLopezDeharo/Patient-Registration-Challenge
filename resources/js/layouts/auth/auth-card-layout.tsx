@@ -1,11 +1,4 @@
 import AppLogoIcon from '@/components/app-logo-icon';
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card';
 import { home } from '@/routes';
 import { Link } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
@@ -32,15 +25,17 @@ export default function AuthCardLayout({
                 </Link>
 
                 <div className="flex flex-col gap-6">
-                    <Card className="rounded-xl">
-                        <CardHeader className="px-10 pt-8 pb-0 text-center">
-                            <CardTitle className="text-xl">{title}</CardTitle>
-                            <CardDescription>{description}</CardDescription>
-                        </CardHeader>
-                        <CardContent className="px-10 py-8">
-                            {children}
-                        </CardContent>
-                    </Card>
+                    <div className="rounded-xl border bg-card text-card-foreground shadow">
+                        <div className="flex flex-col space-y-1.5 px-10 pt-8 pb-0 text-center">
+                            <h3 className="font-semibold leading-none tracking-tight text-xl">
+                                {title}
+                            </h3>
+                            <p className="text-sm text-muted-foreground">
+                                {description}
+                            </p>
+                        </div>
+                        <div className="px-10 py-8">{children}</div>
+                    </div>
                 </div>
             </div>
         </div>

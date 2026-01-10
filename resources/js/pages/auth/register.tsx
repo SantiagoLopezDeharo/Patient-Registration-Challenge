@@ -4,10 +4,10 @@ import { Form, Head } from '@inertiajs/react';
 
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Spinner } from '@/components/ui/spinner';
+import { Button } from '@/components/button';
+import { Input } from '@/components/input';
+import * as LabelPrimitive from '@radix-ui/react-label';
+import { Loader2 } from 'lucide-react';
 import AuthLayout from '@/layouts/auth-layout';
 
 export default function Register() {
@@ -27,7 +27,7 @@ export default function Register() {
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
+                                <LabelPrimitive.Root htmlFor="name" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Name</LabelPrimitive.Root>
                                 <Input
                                     id="name"
                                     type="text"
@@ -45,7 +45,7 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
+                                <LabelPrimitive.Root htmlFor="email" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Email address</LabelPrimitive.Root>
                                 <Input
                                     id="email"
                                     type="email"
@@ -59,7 +59,7 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password">Password</Label>
+                                <LabelPrimitive.Root htmlFor="password" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Password</LabelPrimitive.Root>
                                 <Input
                                     id="password"
                                     type="password"
@@ -73,9 +73,9 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password_confirmation">
+                                <LabelPrimitive.Root htmlFor="password_confirmation" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                                     Confirm password
-                                </Label>
+                                </LabelPrimitive.Root>
                                 <Input
                                     id="password_confirmation"
                                     type="password"
@@ -96,7 +96,7 @@ export default function Register() {
                                 tabIndex={5}
                                 data-test="register-user-button"
                             >
-                                {processing && <Spinner />}
+                                {processing && <Loader2 className="h-4 w-4 animate-spin" />}
                                 Create account
                             </Button>
                         </div>

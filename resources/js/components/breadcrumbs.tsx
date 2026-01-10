@@ -1,13 +1,6 @@
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
 import { type BreadcrumbItem as BreadcrumbItemType } from '@/types';
 import { Link } from '@inertiajs/react';
+import { ChevronRight } from 'lucide-react';
 import { Fragment } from 'react';
 
 export function Breadcrumbs({
@@ -18,31 +11,45 @@ export function Breadcrumbs({
     return (
         <>
             {breadcrumbs.length > 0 && (
-                <Breadcrumb>
-                    <BreadcrumbList>
+                <nav aria-label="breadcrumb">
+                    <ol className="flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5">
                         {breadcrumbs.map((item, index) => {
                             const isLast = index === breadcrumbs.length - 1;
                             return (
                                 <Fragment key={index}>
-                                    <BreadcrumbItem>
+                                    <li className="inline-flex items-center gap-1.5">
                                         {isLast ? (
-                                            <BreadcrumbPage>
+                                            <span
+                                                role="link"
+                                                aria-disabled="true"
+                                                aria-current="page"
+                                                className="font-normal text-foreground"
+                                            >
                                                 {item.title}
-                                            </BreadcrumbPage>
+                                            </span>
                                         ) : (
-                                            <BreadcrumbLink asChild>
-                                                <Link href={item.href}>
-                                                    {item.title}
-                                                </Link>
-                                            </BreadcrumbLink>
+                                            <Link
+                                                href={item.href}
+                                                className="transition-colors hover:text-foreground"
+                                            >
+                                                {item.title}
+                                            </Link>
                                         )}
-                                    </BreadcrumbItem>
-                                    {!isLast && <BreadcrumbSeparator />}
+                                    </li>
+                                    {!isLast && (
+                                        <li
+                                            role="presentation"
+                                            aria-hidden="true"
+                                            className="[&>svg]:size-3.5"
+                                        >
+                                            <ChevronRight />
+                                        </li>
+                                    )}
                                 </Fragment>
                             );
                         })}
-                    </BreadcrumbList>
-                </Breadcrumb>
+                    </ol>
+                </nav>
             )}
         </>
     );

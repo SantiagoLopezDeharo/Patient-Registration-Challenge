@@ -18,7 +18,7 @@ This project is a patient registration application built with **Laravel** and **
 
 Follow these steps to set up the project on a new machine.
 
-### 1. proper Set Environment Variables
+### 1. Set Environment Variables
 
 Copy the example environment file:
 
@@ -28,9 +28,7 @@ cp .env.example .env
 
 ### 2. Install PHP Dependencies
 
-Since this project uses Laravel Sail, and the Docker setup relies on files inside the `vendor` folder, we need to install dependencies *before* starting the main containers.
-
-Run this command to install dependencies using a temporary Docker container:
+This project relies on Laravel Sail. To install dependencies without having PHP installed locally, run:
 
 ```bash
 docker run --rm \
@@ -40,37 +38,48 @@ docker run --rm \
     laravelsail/php84-composer:latest \
     composer install --ignore-platform-reqs
 ```
-*(Note: If you are on Windows PowerShell, use `${PWD}` instead of `$(pwd)`).*
+*(Note for Windows PowerShell: Use `${PWD}` instead of `$(pwd)`.)*
 
 ### 3. Start the Application
 
-Start the Docker containers in detached mode:
+Start the Docker containers (including Laravel Octane/Swoole, PostgreSQL, and Redis):
 
 ```bash
-./vendor/bin/sail up -d
-# OR if you don't have the alias configured:
-docker compose up -d
+./vendor/bin/sail up -d --build
 ```
+*Note: The `--build` flag is recommended on the first run to ensure the Swoole extension is correctly compiled.*
 
 ### 4. Setup Application
 
-Once the containers are running, execute the following commands to set up the database and frontend assets:
+Generate the application key and run migrations:
 
 ```bash
-# Install Node dependencies
-./vendor/bin/sail npm install
-
-# Build frontend assets
-./vendor/bin/sail npm run build
-
-# Run database migrations
-./vendor/bin/sail artisan migrate
+./vendor/bin/sail artisan key:generate
+./vendor/bin/sail artisan migrate --seed
 ```
 
-### 5. Access the Application
+### 5. Install Frontend Dependencies & Build
+
+Install Node.js dependencies and build the assets:
+
+```bash
+./vendor/bin/sail npm install
+./vendor/bin/sail npm run build
+```
+
+### 6. Access the Application
 
 The application should now be accessible at:
 **http://localhost**
+
+## Octane & Swoole
+This application runs on **Laravel Octane** with the **Swoole** server for high performance.
+The server automatically starts when you run `sail up`.
+
+You can check the status:
+```bash
+./vendor/bin/sail artisan octane:status
+```
 
 ## 🛠 Development Usage
 

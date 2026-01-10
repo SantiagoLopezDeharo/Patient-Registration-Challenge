@@ -1,6 +1,6 @@
 import Heading from '@/components/heading';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/button';
+import { Separator } from '@/components/separator';
 import { cn, toUrl } from '@/lib/utils';
 import { useActiveUrl } from '@/hooks/use-active-url';
 import { edit as editAppearance } from '@/routes/appearance';

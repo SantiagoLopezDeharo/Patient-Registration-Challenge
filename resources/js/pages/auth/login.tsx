@@ -1,10 +1,11 @@
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Spinner } from '@/components/ui/spinner';
+import { Button } from '@/components/button';
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
+import * as LabelPrimitive from '@radix-ui/react-label';
+import { Check } from 'lucide-react';
+import { Input } from '@/components/input';
+import { Loader2 } from 'lucide-react';
 import AuthLayout from '@/layouts/auth-layout';
 import { register } from '@/routes';
 import { store } from '@/routes/login';
@@ -38,7 +39,7 @@ export default function Login({
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
+                                <LabelPrimitive.Root htmlFor="email" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Email address</LabelPrimitive.Root>
                                 <Input
                                     id="email"
                                     type="email"
@@ -54,7 +55,7 @@ export default function Login({
 
                             <div className="grid gap-2">
                                 <div className="flex items-center">
-                                    <Label htmlFor="password">Password</Label>
+                                    <LabelPrimitive.Root htmlFor="password" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Password</LabelPrimitive.Root>
                                     {canResetPassword && (
                                         <TextLink
                                             href={request()}
@@ -78,12 +79,17 @@ export default function Login({
                             </div>
 
                             <div className="flex items-center space-x-3">
-                                <Checkbox
+                                <CheckboxPrimitive.Root
                                     id="remember"
                                     name="remember"
                                     tabIndex={3}
-                                />
-                                <Label htmlFor="remember">Remember me</Label>
+                                    className="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                                >
+                                    <CheckboxPrimitive.Indicator className="flex items-center justify-center text-current">
+                                        <Check className="h-4 w-4" />
+                                    </CheckboxPrimitive.Indicator>
+                                </CheckboxPrimitive.Root>
+                                <LabelPrimitive.Root htmlFor="remember" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Remember me</LabelPrimitive.Root>
                             </div>
 
                             <Button
@@ -93,7 +99,7 @@ export default function Login({
                                 disabled={processing}
                                 data-test="login-button"
                             >
-                                {processing && <Spinner />}
+                                {processing && <Loader2 className="h-4 w-4 animate-spin" />}
                                 Log in
                             </Button>
                         </div>

@@ -4,7 +4,7 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-} from '@/components/ui/sidebar';
+} from '@/components/sidebar';
 import { useActiveUrl } from '@/hooks/use-active-url';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
