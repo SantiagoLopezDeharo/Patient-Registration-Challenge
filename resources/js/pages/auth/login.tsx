@@ -16,6 +16,13 @@ export default function Login({ canResetPassword }: LoginProps) {
     return (
         <GuestLayout>
             <Head title="Log in" />
+            <div className="text-center">
+                <img
+                    src="/images/logo.png"
+                    alt="App Logo"
+                    className="mx-auto mb-4 max-w-xs"
+                />
+            </div>
             <div className="mb-4 text-center text-sm text-muted-foreground">
                 Log in to your account
             </div>

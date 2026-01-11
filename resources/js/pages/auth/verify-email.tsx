@@ -13,6 +13,13 @@ export default function VerifyEmail({ status }: { status?: string }) {
             title="Verify email"
             description="Please verify your email address by clicking on the link we just emailed to you."
         >
+            <div className="text-center">
+                <img
+                    src="/images/logo.png"
+                    alt="App Logo"
+                    className="mx-auto mb-4 max-w-xs"
+                />
+            </div>
             <Head title="Email verification" />
 
             {status === 'verification-link-sent' && (
