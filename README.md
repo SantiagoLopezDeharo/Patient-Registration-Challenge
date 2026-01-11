@@ -45,7 +45,7 @@ docker run --rm \
 Start the Docker containers (including Laravel Octane/Swoole, PostgreSQL, and Redis):
 
 ```bash
-docker compose exec laravel.test up -d --build
+docker compose up -d --build
 ```
 *Note: The `--build` flag is recommended on the first run to ensure the Swoole extension is correctly compiled.*
 
@@ -54,8 +54,8 @@ docker compose exec laravel.test up -d --build
 Generate the application key and run migrations:
 
 ```bash
-docker compose exec laravel.test artisan key:generate
-docker compose exec laravel.test artisan migrate --seed
+docker compose exec laravel.test php artisan key:generate
+docker compose exec laravel.test php artisan migrate --seed
 ```
 
 ### 5. Install Frontend Dependencies & Build
