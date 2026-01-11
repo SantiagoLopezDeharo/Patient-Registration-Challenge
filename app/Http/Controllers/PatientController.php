@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Patient;
 use App\Notifications\PatientRegistered;
+use App\Notifications\PatientDetached;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Laravel\Octane\Facades\Octane;
 use Throwable;
+use Illuminate\Support\Facades\Notification;
 
 class PatientController extends Controller
 {
@@ -49,6 +51,74 @@ class PatientController extends Controller
                 'per_page' => $perPage,
             ],
         ]);
+    }
+
+    public function destroy(Request $request, Patient $patient)
+    {
+        $wantsJson = $request->wantsJson();
+
+        // ensure the patient belongs to the authenticated user
+        if ($patient->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $patientName = $patient->full_name;
+        $email = $patient->email;
+
+        // storage path without leading '/storage/'
+        $storagePath = ltrim($patient->document_photo_path, '/');
+        if (str_starts_with($storagePath, 'storage/')) {
+            $storagePath = substr($storagePath, strlen('storage/'));
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $patient->delete();
+
+            DB::commit();
+
+            // delete file from public disk (best-effort)
+            try {
+                if (!empty($storagePath)) {
+                    Storage::disk('public')->delete($storagePath);
+                }
+            } catch (Throwable $e) {
+                Log::error('Failed to delete patient document photo', ['path' => $storagePath, 'error' => $e->getMessage()]);
+            }
+
+            // notify patient by email — dispatch to Octane tasks when available
+            $removedBy = auth()->user()->name ?? null;
+
+            if (isset($_SERVER['LARAVEL_OCTANE'])) {
+                Log::info('PatientDetached: dispatching to Octane task worker', ['email' => $email]);
+                Octane::tasks()->dispatch([
+                    function () use ($email, $patientName, $removedBy) {
+                        try {
+                            Notification::route('mail', $email)->notify(new PatientDetached($patientName, $removedBy));
+                        } catch (Throwable $e) {
+                            report($e);
+                        }
+                    },
+                ]);
+            } else {
+                Log::info('PatientDetached: sending synchronously', ['email' => $email]);
+                Notification::route('mail', $email)->notify(new PatientDetached($patientName, $removedBy));
+            }
+
+            return $wantsJson
+                ? response()->json(['ok' => true])
+                : redirect()->back();
+        } catch (Throwable $e) {
+            DB::rollBack();
+            report($e);
+
+            return $wantsJson
+                ? response()->json(['error' => 'Unable to delete patient right now.'], 500)
+                : redirect()->back()->withErrors([
+                    'error' => 'Unable to delete patient right now. Please try again.',
+                ]);
+        }
     }
 
     public function store(Request $request)

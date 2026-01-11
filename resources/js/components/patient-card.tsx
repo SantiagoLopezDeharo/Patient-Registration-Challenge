@@ -1,7 +1,9 @@
 import { cn } from '@/lib/utils';
 import { ChevronDown, ChevronUp, Mail, Phone } from 'lucide-react';
 import { useState } from 'react';
+// route is not used here; deletion handled in DeletePatientButton
 import CopyButton from './copy-button';
+import DeletePatientButton from './delete-patient-button';
 
 interface Patient {
     id: number;
@@ -119,12 +121,19 @@ export default function PatientCard({
                     </div>
                 </div>
 
-                <div className="mt-auto pt-4">
+                <div className="mt-auto flex items-center justify-between gap-3 pt-4">
                     <div className="text-xs text-gray-400">
                         <span className="sm:hidden">Tap to collapse</span>
                         <span className="hidden sm:inline">
                             Click anywhere to collapse
                         </span>
+                    </div>
+
+                    <div>
+                        <DeletePatientButton
+                            patientId={patient.id}
+                            onSuccess={() => globalThis.location.reload()}
+                        />
                     </div>
                 </div>
             </div>
