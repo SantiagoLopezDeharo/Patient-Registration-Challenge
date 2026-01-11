@@ -1,16 +1,12 @@
-import InputError from '@/components/input-error';
-import TextLink from '@/components/text-link';
-import { Button } from '@/components/button';
-import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
-import * as LabelPrimitive from '@radix-ui/react-label';
-import { Check } from 'lucide-react';
-import { Input } from '@/components/input';
-import { Loader2 } from 'lucide-react';
-import AuthLayout from '@/layouts/auth-layout';
+import AuthInput from '@/components/auth-input';
+import GuestLayout from '@/layouts/guest-layout';
 import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
-import { Form, Head } from '@inertiajs/react';
+import { Form, Head, Link } from '@inertiajs/react';
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
+import * as LabelPrimitive from '@radix-ui/react-label';
+import { Check, Loader2 } from 'lucide-react';
 
 interface LoginProps {
     status?: string;
@@ -24,11 +20,12 @@ export default function Login({
     canRegister,
 }: LoginProps) {
     return (
-        <AuthLayout
-            title="Log in to your account"
-            description="Enter your email and password below to log in"
-        >
+        <GuestLayout>
             <Head title="Log in" />
+
+            <div className="mb-4 text-center text-sm text-gray-900">
+                Log in to your account
+            </div>
 
             <Form
                 {...store.form()}
@@ -39,8 +36,13 @@ export default function Login({
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <LabelPrimitive.Root htmlFor="email" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Email address</LabelPrimitive.Root>
-                                <Input
+                                <LabelPrimitive.Root
+                                    htmlFor="email"
+                                    className="text-sm leading-none font-medium text-gray-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                >
+                                    Email address
+                                </LabelPrimitive.Root>
+                                <AuthInput
                                     id="email"
                                     type="email"
                                     name="email"
@@ -49,24 +51,25 @@ export default function Login({
                                     tabIndex={1}
                                     autoComplete="email"
                                     placeholder="email@example.com"
+                                    isError={!!errors.email}
                                 />
-                                <InputError message={errors.email} />
+                                {errors.email && (
+                                    <div className="text-sm text-red-500">
+                                        {errors.email}
+                                    </div>
+                                )}
                             </div>
 
                             <div className="grid gap-2">
                                 <div className="flex items-center">
-                                    <LabelPrimitive.Root htmlFor="password" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Password</LabelPrimitive.Root>
-                                    {canResetPassword && (
-                                        <TextLink
-                                            href={request()}
-                                            className="ml-auto text-sm"
-                                            tabIndex={5}
-                                        >
-                                            Forgot password?
-                                        </TextLink>
-                                    )}
+                                    <LabelPrimitive.Root
+                                        htmlFor="password"
+                                        className="text-sm leading-none font-medium text-gray-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                    >
+                                        Password
+                                    </LabelPrimitive.Root>
                                 </div>
-                                <Input
+                                <AuthInput
                                     id="password"
                                     type="password"
                                     name="password"
@@ -74,53 +77,71 @@ export default function Login({
                                     tabIndex={2}
                                     autoComplete="current-password"
                                     placeholder="Password"
+                                    isError={!!errors.password}
                                 />
-                                <InputError message={errors.password} />
+                                {errors.password && (
+                                    <div className="text-sm text-red-500">
+                                        {errors.password}
+                                    </div>
+                                )}
                             </div>
 
-                            <div className="flex items-center space-x-3">
-                                <CheckboxPrimitive.Root
-                                    id="remember"
-                                    name="remember"
-                                    tabIndex={3}
-                                    className="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
-                                >
-                                    <CheckboxPrimitive.Indicator className="flex items-center justify-center text-current">
-                                        <Check className="h-4 w-4" />
-                                    </CheckboxPrimitive.Indicator>
-                                </CheckboxPrimitive.Root>
-                                <LabelPrimitive.Root htmlFor="remember" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Remember me</LabelPrimitive.Root>
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <CheckboxPrimitive.Root
+                                        id="remember"
+                                        name="remember"
+                                        tabIndex={3}
+                                        className="peer h-4 w-4 shrink-0 rounded-sm border border-gray-900 ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-gray-900 data-[state=checked]:text-white"
+                                    >
+                                        <CheckboxPrimitive.Indicator className="flex items-center justify-center text-current">
+                                            <Check className="h-4 w-4" />
+                                        </CheckboxPrimitive.Indicator>
+                                    </CheckboxPrimitive.Root>
+                                    <LabelPrimitive.Root
+                                        htmlFor="remember"
+                                        className="text-sm leading-none font-medium text-gray-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                    >
+                                        Remember me
+                                    </LabelPrimitive.Root>
+                                </div>
+
+                                {canResetPassword && (
+                                    <Link
+                                        href={request()}
+                                        className="text-sm text-gray-600 underline hover:text-gray-900"
+                                        tabIndex={5}
+                                    >
+                                        Forgot password?
+                                    </Link>
+                                )}
                             </div>
 
-                            <Button
+                            <button
                                 type="submit"
-                                className="mt-4 w-full"
+                                className="inline-flex h-9 w-full items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white shadow hover:bg-gray-800 focus-visible:ring-1 focus-visible:ring-gray-950 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
                                 tabIndex={4}
                                 disabled={processing}
-                                data-test="login-button"
                             >
-                                {processing && <Loader2 className="h-4 w-4 animate-spin" />}
+                                {processing && (
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                )}
                                 Log in
-                            </Button>
+                            </button>
                         </div>
 
-                        {canRegister && (
-                            <div className="text-center text-sm text-muted-foreground">
-                                Don't have an account?{' '}
-                                <TextLink href={register()} tabIndex={5}>
-                                    Sign up
-                                </TextLink>
-                            </div>
-                        )}
+                        <div className="text-center text-sm text-muted-foreground">
+                            Don&apos;t have an account?{' '}
+                            <Link
+                                href={register()}
+                                className="text-gray-900 underline underline-offset-4 hover:text-gray-700"
+                            >
+                                Sign up
+                            </Link>
+                        </div>
                     </>
                 )}
             </Form>
-
-            {status && (
-                <div className="mb-4 text-center text-sm font-medium text-green-600">
-                    {status}
-                </div>
-            )}
-        </AuthLayout>
+        </GuestLayout>
     );
 }

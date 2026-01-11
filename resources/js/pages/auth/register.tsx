@@ -1,115 +1,150 @@
+import AuthInput from '@/components/auth-input';
+import GuestLayout from '@/layouts/guest-layout';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
-import { Form, Head } from '@inertiajs/react';
-
-import InputError from '@/components/input-error';
-import TextLink from '@/components/text-link';
-import { Button } from '@/components/button';
-import { Input } from '@/components/input';
+import { Form, Head, Link } from '@inertiajs/react';
 import * as LabelPrimitive from '@radix-ui/react-label';
 import { Loader2 } from 'lucide-react';
-import AuthLayout from '@/layouts/auth-layout';
 
 export default function Register() {
     return (
-        <AuthLayout
-            title="Create an account"
-            description="Enter your details below to create your account"
-        >
+        <GuestLayout>
             <Head title="Register" />
+
+            <div className="mb-4 text-center text-sm text-gray-900">
+                Create an account
+            </div>
+
             <Form
                 {...store.form()}
                 resetOnSuccess={['password', 'password_confirmation']}
-                disableWhileProcessing
                 className="flex flex-col gap-6"
             >
                 {({ processing, errors }) => (
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <LabelPrimitive.Root htmlFor="name" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Name</LabelPrimitive.Root>
-                                <Input
+                                <LabelPrimitive.Root
+                                    htmlFor="name"
+                                    className="text-sm font-medium leading-none text-gray-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                >
+                                    Name
+                                </LabelPrimitive.Root>
+                                <AuthInput
                                     id="name"
                                     type="text"
+                                    name="name"
                                     required
                                     autoFocus
                                     tabIndex={1}
                                     autoComplete="name"
-                                    name="name"
-                                    placeholder="Full name"
+                                    placeholder="John Doe"
+                                    isError={!!errors.name}
                                 />
-                                <InputError
-                                    message={errors.name}
-                                    className="mt-2"
-                                />
+                                {errors.name && (
+                                    <div className="text-sm text-red-500">
+                                        {errors.name}
+                                    </div>
+                                )}
                             </div>
 
                             <div className="grid gap-2">
-                                <LabelPrimitive.Root htmlFor="email" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Email address</LabelPrimitive.Root>
-                                <Input
+                                <LabelPrimitive.Root
+                                    htmlFor="email"
+                                    className="text-sm font-medium leading-none text-gray-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                >
+                                    Email address
+                                </LabelPrimitive.Root>
+                                <AuthInput
                                     id="email"
                                     type="email"
+                                    name="email"
                                     required
                                     tabIndex={2}
                                     autoComplete="email"
-                                    name="email"
-                                    placeholder="email@example.com"
+                                    placeholder="name@example.com"
+                                    isError={!!errors.email}
                                 />
-                                <InputError message={errors.email} />
+                                {errors.email && (
+                                    <div className="text-sm text-red-500">
+                                        {errors.email}
+                                    </div>
+                                )}
                             </div>
 
                             <div className="grid gap-2">
-                                <LabelPrimitive.Root htmlFor="password" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Password</LabelPrimitive.Root>
-                                <Input
+                                <LabelPrimitive.Root
+                                    htmlFor="password"
+                                    className="text-sm font-medium leading-none text-gray-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                >
+                                    Password
+                                </LabelPrimitive.Root>
+                                <AuthInput
                                     id="password"
                                     type="password"
+                                    name="password"
                                     required
                                     tabIndex={3}
                                     autoComplete="new-password"
-                                    name="password"
                                     placeholder="Password"
+                                    isError={!!errors.password}
                                 />
-                                <InputError message={errors.password} />
+                                {errors.password && (
+                                    <div className="text-sm text-red-500">
+                                        {errors.password}
+                                    </div>
+                                )}
                             </div>
 
                             <div className="grid gap-2">
-                                <LabelPrimitive.Root htmlFor="password_confirmation" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                                    Confirm password
+                                <LabelPrimitive.Root
+                                    htmlFor="password_confirmation"
+                                    className="text-sm font-medium leading-none text-gray-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                >
+                                    Confirm Password
                                 </LabelPrimitive.Root>
-                                <Input
+                                <AuthInput
                                     id="password_confirmation"
                                     type="password"
+                                    name="password_confirmation"
                                     required
                                     tabIndex={4}
                                     autoComplete="new-password"
-                                    name="password_confirmation"
-                                    placeholder="Confirm password"
+                                    placeholder="Confirm Password"
+                                    isError={!!errors.password_confirmation}
                                 />
-                                <InputError
-                                    message={errors.password_confirmation}
-                                />
+                                {errors.password_confirmation && (
+                                    <div className="text-sm text-red-500">
+                                        {errors.password_confirmation}
+                                    </div>
+                                )}
                             </div>
 
-                            <Button
+                            <button
                                 type="submit"
-                                className="mt-2 w-full"
+                                className="inline-flex h-9 w-full items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white shadow hover:bg-gray-800 focus-visible:ring-1 focus-visible:ring-gray-950 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
                                 tabIndex={5}
-                                data-test="register-user-button"
+                                disabled={processing}
                             >
-                                {processing && <Loader2 className="h-4 w-4 animate-spin" />}
+                                {processing && (
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                )}
                                 Create account
-                            </Button>
+                            </button>
                         </div>
 
                         <div className="text-center text-sm text-muted-foreground">
                             Already have an account?{' '}
-                            <TextLink href={login()} tabIndex={6}>
+                            <Link
+                                href={login()}
+                                className="text-gray-900 underline underline-offset-4 hover:text-gray-700"
+                            >
                                 Log in
-                            </TextLink>
+                            </Link>
                         </div>
                     </>
                 )}
             </Form>
-        </AuthLayout>
+        </GuestLayout>
     );
 }
