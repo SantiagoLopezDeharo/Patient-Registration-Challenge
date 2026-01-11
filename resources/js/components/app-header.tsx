@@ -1,12 +1,11 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
-import { Icon } from '@/components/icon';
-import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { Button } from '@/components/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from '@/components/dropdown-menu';
+import { Icon } from '@/components/icon';
 import {
     NavigationMenu,
     NavigationMenuItem,
@@ -20,14 +19,14 @@ import {
     SheetTitle,
     SheetTrigger,
 } from '@/components/sheet';
-import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { UserMenuContent } from '@/components/user-menu-content';
-import { useInitials } from '@/hooks/use-initials';
 import { useActiveUrl } from '@/hooks/use-active-url';
+import { useInitials } from '@/hooks/use-initials';
 import { cn, toUrl } from '@/lib/utils';
-import { dashboard } from '@/routes';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
+import * as AvatarPrimitive from '@radix-ui/react-avatar';
+import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-react';
 import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
@@ -35,7 +34,7 @@ import AppLogoIcon from './app-logo-icon';
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
-        href: dashboard(),
+        href: '/',
         icon: LayoutGrid,
     },
 ];
@@ -137,7 +136,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                     </div>
 
                     <Link
-                        href={dashboard()}
+                        href={'/'}
                         prefetch
                         className="flex items-center space-x-2"
                     >
@@ -157,7 +156,8 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                                             href={item.href}
                                             className={cn(
                                                 navigationMenuTriggerStyle(),
-                                                urlIsActive(item.href) && activeItemStyles,
+                                                urlIsActive(item.href) &&
+                                                    activeItemStyles,
                                                 'h-9 cursor-pointer px-3',
                                             )}
                                         >
@@ -212,7 +212,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                                                     )}
                                                 </a>
                                             </TooltipPrimitive.Trigger>
-                                            <TooltipPrimitive.Content className="z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2">
+                                            <TooltipPrimitive.Content className="z-50 animate-in overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md fade-in-0 zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95">
                                                 <p>{item.title}</p>
                                             </TooltipPrimitive.Content>
                                         </TooltipPrimitive.Root>
@@ -226,7 +226,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                                     variant="ghost"
                                     className="size-10 rounded-full p-1"
                                 >
-                                    <AvatarPrimitive.Root className="size-8 relative flex shrink-0 overflow-hidden rounded-full">
+                                    <AvatarPrimitive.Root className="relative flex size-8 shrink-0 overflow-hidden rounded-full">
                                         <AvatarPrimitive.Image
                                             className="aspect-square size-full"
                                             src={auth.user.avatar}

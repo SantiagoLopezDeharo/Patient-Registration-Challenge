@@ -6,14 +6,45 @@ use Illuminate\Http\Request;
 use App\Notifications\PatientRegistered;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Throwable;
 
 class PatientController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $perPage = $request->integer('per_page', 12);
+        $perPage = max(1, min(100, $perPage));
+
+        $field = $request->string('field', 'full_name')->toString();
+        $allowedFields = ['full_name', 'email', 'phone_number'];
+        if (!in_array($field, $allowedFields, true)) {
+            $field = 'full_name';
+        }
+
+        $search = $request->string('q')->trim()->toString();
+
+        $patientsQuery = auth()->user()->patients()->latest();
+
+        if ($search !== '') {
+            $patientsQuery->where($field, 'like', '%' . $search . '%');
+        }
+
+        $patients = $patientsQuery->paginate(perPage: $perPage)->withQueryString();
+
+        $patientsResource = \App\Http\Resources\PatientResource::collection($patients);
+
+        if ($request->route()?->named('patients.index') || $request->wantsJson()) {
+            return $patientsResource;
+        }
+
         return \Inertia\Inertia::render('home', [
-            'patients' => \App\Http\Resources\PatientResource::collection(auth()->user()->patients()->latest()->get())
+            'patients' => $patientsResource,
+            'filters' => [
+                'q' => $search,
+                'field' => $field,
+                'per_page' => $perPage,
+            ],
         ]);
     }
 
@@ -24,7 +55,7 @@ class PatientController extends Controller
             'email' => [
                 'required',
                 'email',
-                \Illuminate\Validation\Rule::unique('patients')->where(fn($query) => $query->where('user_id', auth()->id())),
+                Rule::unique('patients')->where(fn($query) => $query->where('user_id', auth()->id())),
                 'regex:/^[a-z0-9]+@gmail\.com$/i',
             ],
             'country_code' => ['required', 'string', 'regex:/^\+\d{1,4}$/'],
