@@ -9,6 +9,7 @@ interface DragDropFileInputProps {
     errorMessage?: string;
     accept?: string;
     description?: string;
+    required?: boolean;
 }
 
 export default function DragDropFileInput({
@@ -19,7 +20,8 @@ export default function DragDropFileInput({
     errorMessage,
     accept,
     description,
-}: DragDropFileInputProps) {
+    required,
+}: Readonly<DragDropFileInputProps>) {
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -36,8 +38,8 @@ export default function DragDropFileInput({
     const handleDrop = (e: DragEvent) => {
         e.preventDefault();
         setIsDragging(false);
-        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-            const file = e.dataTransfer.files[0];
+        const file = e.dataTransfer.files?.[0];
+        if (file) {
             // Simple type check if accept is provided (basic implementation)
             if (
                 accept &&
@@ -61,8 +63,9 @@ export default function DragDropFileInput({
     };
 
     const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            onChange(e.target.files[0]);
+        const file = e.target.files?.[0];
+        if (file) {
+            onChange(file);
         }
     };
 
@@ -75,7 +78,8 @@ export default function DragDropFileInput({
                 {label}
             </label>
             <div className="col-span-3">
-                <div
+                <button
+                    type="button"
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}
@@ -94,6 +98,7 @@ export default function DragDropFileInput({
                         type="file"
                         accept={accept}
                         className="hidden"
+                        required={required}
                         onChange={handleFileSelect}
                     />
                     <CloudUpload
@@ -120,7 +125,7 @@ export default function DragDropFileInput({
                             {description}
                         </p>
                     )}
-                </div>
+                </button>
                 <div
                     className={`grid transition-all duration-300 ease-in-out ${
                         errorMessage

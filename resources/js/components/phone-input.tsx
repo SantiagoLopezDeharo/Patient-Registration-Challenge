@@ -16,12 +16,12 @@ export default function PhoneInput({
     countryCodeError,
     numberError,
     required = false,
-}: PhoneInputProps) {
+}: Readonly<PhoneInputProps>) {
     return (
         <div className="grid grid-cols-4 items-start gap-4">
-            <label className="pt-2 text-right text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-50">
+            <span className="pt-2 text-right text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-50">
                 Phone
-            </label>
+            </span>
             <div className="col-span-3 flex gap-3">
                 <div className="w-24 shrink-0">
                     <input
@@ -34,6 +34,9 @@ export default function PhoneInput({
                         }`}
                         value={countryCode}
                         onChange={(e) => onCountryCodeChange(e.target.value)}
+                        inputMode="tel"
+                        pattern="[\+][0-9]{1,4}"
+                        maxLength={5}
                         required={required}
                     />
                     <div
@@ -61,6 +64,9 @@ export default function PhoneInput({
                         }`}
                         value={number}
                         onChange={(e) => onNumberChange(e.target.value)}
+                        inputMode="numeric"
+                        pattern="[0-9]+"
+                        maxLength={15}
                         required={required}
                     />
                     <div

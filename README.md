@@ -76,6 +76,10 @@ The application should now be accessible at:
 This application runs on **Laravel Octane** with the **Swoole** server for high performance.
 The server automatically starts when you run `sail up`.
 
+Worker counts are configured via `.env` and applied by `compose.yaml`:
+- `OCTANE_WORKERS` (HTTP workers)
+- `OCTANE_TASK_WORKERS` (Swoole task workers)
+
 You can check the status:
 ```bash
 docker compose exec laravel.test artisan octane:status

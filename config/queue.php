@@ -73,6 +73,10 @@ return [
             'after_commit' => false,
         ],
 
+        'octane' => [
+            'driver' => 'octane',
+        ],
+
         'deferred' => [
             'driver' => 'deferred',
         ],
