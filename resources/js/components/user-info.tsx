@@ -15,7 +15,7 @@ export function UserInfo({
         <>
             <AvatarPrimitive.Root className="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-full">
                 <AvatarPrimitive.Image className="aspect-square size-full" src={user.avatar} alt={user.name} />
-                <AvatarPrimitive.Fallback className="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                <AvatarPrimitive.Fallback className="flex h-full w-full items-center justify-center rounded-lg bg-muted text-muted-foreground">
                     {getInitials(user.name)}
                 </AvatarPrimitive.Fallback>
             </AvatarPrimitive.Root>

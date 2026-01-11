@@ -26,7 +26,7 @@ export default function ConfirmDialog({
             className="fixed inset-0 z-50 flex items-center justify-center"
             onClick={onCancel}
         >
-            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 bg-background/40" />
 
             <div
                 className="relative z-10 w-full max-w-sm rounded-lg bg-card p-4 shadow-lg"

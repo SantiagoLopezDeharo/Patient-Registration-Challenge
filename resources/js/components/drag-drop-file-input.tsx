@@ -133,7 +133,7 @@ export default function DragDropFileInput({
                                     alt="Preview"
                                     className="h-full w-full object-cover"
                                 />
-                                <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-opacity hover:bg-black/30 hover:opacity-100">
+                                <div className="absolute inset-0 flex items-center justify-center bg-background/0 opacity-0 transition-opacity hover:bg-muted/30 hover:opacity-100">
                                     <span className="text-sm text-white">
                                         Change
                                     </span>
@@ -155,7 +155,7 @@ export default function DragDropFileInput({
                             />
                             <div className="text-center text-sm">
                                 <>
-                                    <span className="font-semibold text-gray-900">
+                                    <span className="font-semibold text-foreground">
                                         Click to upload
                                     </span>{' '}
                                     or drag and drop

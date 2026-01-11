@@ -29,7 +29,7 @@ export function AppHeaderUserMenu() {
                     className="group flex items-center gap-3 rounded-full border border-border bg-card py-1.5 pr-3 pl-2 text-sm font-medium transition-all hover:border-sidebar-ring hover:shadow-sm focus:border-border focus:ring-4 focus:ring-ring focus:outline-none data-[state=open]:border-border data-[state=open]:ring-4 data-[state=open]:ring-ring"
                     aria-label="User menu"
                 >
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-900 text-xs font-bold text-white transition-transform group-hover:scale-105">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted text-xs font-bold text-muted-foreground transition-transform group-hover:scale-105">
                         {getInitials(auth.user.name)}
                     </div>
                     <span className="hidden text-foreground sm:inline-block">

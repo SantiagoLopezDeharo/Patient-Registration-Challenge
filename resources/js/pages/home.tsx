@@ -91,7 +91,7 @@ export default function Home({
         <div className="min-h-screen bg-background">
             <Head title="Patient Registry" />
 
-            <nav className="border-b border-border bg-card shadow-sm">
+            <nav className="border-b border-border bg-card shadow-md backdrop-blur-sm">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
                         <div className="flex">
@@ -131,7 +131,7 @@ export default function Home({
                         <EmptyPatientState />
                     ) : (
                         <>
-                            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5">
+                            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                                 {items.map((patient) => (
                                     <PatientCard
                                         key={patient.id}
@@ -161,7 +161,7 @@ export default function Home({
                                     </>
                                 )}
                                 {!hasMore && meta.total > 0 && (
-                                    <div className="mt-4 text-center text-sm text-gray-500">
+                                    <div className="mt-4 text-center text-sm text-muted-foreground">
                                         You’ve reached the end.
                                     </div>
                                 )}

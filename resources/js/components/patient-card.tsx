@@ -22,7 +22,7 @@ export default function PatientCard({
         <button
             type="button"
             className={cn(
-                'group relative aspect-[16/9] w-full cursor-pointer overflow-hidden rounded-2xl border border-border bg-card text-left text-card-foreground shadow-sm transition-shadow duration-300 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring/10 focus-visible:outline-none sm:aspect-square',
+                'group relative aspect-[16/9] w-full transform-gpu cursor-pointer overflow-hidden rounded-2xl border border-border bg-card text-left text-card-foreground shadow-md transition duration-300 hover:-translate-y-2 hover:shadow-xl focus-visible:ring-2 focus-visible:ring-ring/10 focus-visible:outline-none sm:aspect-square',
                 expanded && 'ring-2 ring-gray-900/10',
             )}
             aria-expanded={expanded}
@@ -94,7 +94,10 @@ export default function PatientCard({
 
                 <div className="mt-3 space-y-2 text-xs text-muted-foreground sm:mt-4 sm:space-y-3 sm:text-sm">
                     <div className="flex items-center gap-2">
-                        <Mail size={16} className="mt-0.5 shrink-0 text-muted-foreground" />
+                        <Mail
+                            size={16}
+                            className="mt-0.5 shrink-0 text-muted-foreground"
+                        />
                         <span className="min-w-0 break-words">
                             {patient.email}
                         </span>
@@ -104,7 +107,10 @@ export default function PatientCard({
                         />
                     </div>
                     <div className="flex items-center gap-2">
-                        <Phone size={16} className="mt-0.5 shrink-0 text-muted-foreground" />
+                        <Phone
+                            size={16}
+                            className="mt-0.5 shrink-0 text-muted-foreground"
+                        />
                         <span className="min-w-0 break-words">
                             {patient.phone_number}
                         </span>
@@ -115,7 +121,7 @@ export default function PatientCard({
                     </div>
                 </div>
 
-                    <div className="mt-auto flex items-center justify-between gap-3 pt-4">
+                <div className="mt-auto flex items-center justify-between gap-3 pt-4">
                     <div className="text-xs text-muted-foreground">
                         <span className="sm:hidden">Tap to collapse</span>
                         <span className="hidden sm:inline">
