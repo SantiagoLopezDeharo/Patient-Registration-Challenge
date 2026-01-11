@@ -1,5 +1,5 @@
 import { CloudUpload } from 'lucide-react';
-import { DragEvent, useRef, useState } from 'react';
+import { DragEvent, useEffect, useRef, useState } from 'react';
 
 interface DragDropFileInputProps {
     id: string;
@@ -24,6 +24,7 @@ export default function DragDropFileInput({
 }: Readonly<DragDropFileInputProps>) {
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
     const handleDragOver = (e: DragEvent) => {
         e.preventDefault();
@@ -69,6 +70,29 @@ export default function DragDropFileInput({
         }
     };
 
+    useEffect(() => {
+        if (!value) {
+            setPreviewUrl(null);
+            return;
+        }
+
+        const url = URL.createObjectURL(value);
+        setPreviewUrl(url);
+
+        return () => {
+            URL.revokeObjectURL(url);
+            setPreviewUrl(null);
+        };
+    }, [value]);
+
+    const formatBytes = (bytes: number) => {
+        if (bytes < 1024) return `${bytes} B`;
+        const kb = bytes / 1024;
+        if (kb < 1024) return `${kb.toFixed(1)} KB`;
+        const mb = kb / 1024;
+        return `${mb.toFixed(2)} MB`;
+    };
+
     return (
         <div className="grid grid-cols-4 items-start gap-4">
             <label
@@ -101,25 +125,44 @@ export default function DragDropFileInput({
                         required={required}
                         onChange={handleFileSelect}
                     />
-                    <CloudUpload
-                        className={`mb-2 h-8 w-8 ${
-                            errorMessage ? 'text-red-400' : 'text-gray-400'
-                        }`}
-                    />
-                    <div className="text-center text-sm">
-                        {value ? (
-                            <span className="block max-w-[200px] truncate font-medium text-indigo-600">
-                                {value.name}
-                            </span>
-                        ) : (
-                            <>
-                                <span className="font-semibold text-gray-900">
-                                    Click to upload
-                                </span>{' '}
-                                or drag and drop
-                            </>
-                        )}
-                    </div>
+                    {previewUrl ? (
+                        <div className="flex flex-col items-center">
+                            <div className="relative h-32 w-48 overflow-hidden rounded-lg shadow-lg">
+                                <img
+                                    src={previewUrl}
+                                    alt="Preview"
+                                    className="h-full w-full object-cover"
+                                />
+                                <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-opacity hover:bg-black/30 hover:opacity-100">
+                                    <span className="text-sm text-white">
+                                        Change
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="mt-3 text-center">
+                                <span className="block max-w-[240px] truncate font-medium text-indigo-600">
+                                    {value?.name}
+                                </span>
+                                <span className="text-xs text-gray-500">
+                                    {value ? formatBytes(value.size) : ''}
+                                </span>
+                            </div>
+                        </div>
+                    ) : (
+                        <>
+                            <CloudUpload
+                                className={`mb-2 h-8 w-8 ${errorMessage ? 'text-red-400' : 'text-gray-400'}`}
+                            />
+                            <div className="text-center text-sm">
+                                <>
+                                    <span className="font-semibold text-gray-900">
+                                        Click to upload
+                                    </span>{' '}
+                                    or drag and drop
+                                </>
+                            </div>
+                        </>
+                    )}
                     {description && (
                         <p className="mt-1 text-xs text-gray-500">
                             {description}
