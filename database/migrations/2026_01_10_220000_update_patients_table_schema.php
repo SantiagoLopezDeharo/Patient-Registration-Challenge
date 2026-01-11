@@ -10,11 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        // Clear existing patients because they don't have a user association
-        \Illuminate\Support\Facades\DB::table('patients')->delete();
-
         Schema::table('patients', function (Blueprint $table) {
-            $table->foreignId('user_id')->after('id')->constrained()->cascadeOnDelete();
+            $table->dropUnique(['email']);
+            $table->unique(['user_id', 'email']);
         });
     }
 
@@ -24,8 +22,8 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('patients', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
+            $table->dropUnique(['user_id', 'email']);
+            $table->unique('email');
         });
     }
 };

@@ -16,10 +16,22 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'full_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:patients,email',
-            'phone_number' => 'required|string|max:20',
-            'document_photo' => 'required|image|max:10240', // Max 10MB
+            'full_name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\s]+$/'],
+            'email' => [
+                'required',
+                'email',
+                \Illuminate\Validation\Rule::unique('patients')->where(fn($query) => $query->where('user_id', auth()->id())),
+                'regex:/@gmail\.com$/i',
+            ],
+            'country_code' => ['required', 'string', 'regex:/^\+\d{1,4}$/'],
+            'number' => ['required', 'string', 'regex:/^\d+$/', 'max:15'],
+            'document_photo' => 'required|image|mimes:jpg,jpeg|max:10240', // Max 10MB
+        ], [
+            'full_name.regex' => 'The full name field must only contain letters.',
+            'email.regex' => 'The email must be a valid Gmail address.',
+            'country_code.regex' => 'Invalid country code (e.g. +598).',
+            'number.regex' => 'The number must contain only digits.',
+            'document_photo.mimes' => 'The document photo must be a file of type: jpg.',
         ]);
 
         $path = $request->file('document_photo')->store('document_photos', 'public');
@@ -27,7 +39,7 @@ class PatientController extends Controller
         auth()->user()->patients()->create([
             'full_name' => $validated['full_name'],
             'email' => $validated['email'],
-            'phone_number' => $validated['phone_number'],
+            'phone_number' => $validated['country_code'] . ' ' . $validated['number'],
             'document_photo_path' => '/storage/' . $path,
         ]);
 

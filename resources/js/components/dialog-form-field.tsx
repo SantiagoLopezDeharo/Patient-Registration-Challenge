@@ -24,12 +24,22 @@ export default function DialogFormField({
             <div className="col-span-3">
                 <input
                     id={id}
-                    className={`flex h-9 w-full rounded-md border border-gray-200 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:ring-1 focus-visible:ring-gray-950 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+                    className={`flex h-9 w-full rounded-md border border-gray-200 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:ring-1 focus-visible:ring-gray-950 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 ${
+                        errorMessage ? 'border-red-500 focus-visible:ring-red-500' : ''
+                    } ${className}`}
                     {...props}
                 />
-                {errorMessage && (
-                    <span className="text-sm text-red-500">{errorMessage}</span>
-                )}
+                <div
+                    className={`grid transition-all duration-300 ease-in-out ${
+                        errorMessage ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                    }`}
+                >
+                    <div className="overflow-hidden">
+                        <span className="mt-1 block text-xs font-medium text-red-500">
+                            {errorMessage}
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
     );
