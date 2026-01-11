@@ -56,6 +56,7 @@ Generate the application key and run migrations:
 ```bash
 docker compose exec laravel.test php artisan key:generate
 docker compose exec laravel.test php artisan migrate --seed
+docker compose exec laravel.test php artisan storage:link
 ```
 
 ### 5. Install Frontend Dependencies & Build
