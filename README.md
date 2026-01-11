@@ -45,7 +45,7 @@ docker run --rm \
 Start the Docker containers (including Laravel Octane/Swoole, PostgreSQL, and Redis):
 
 ```bash
-./vendor/bin/sail up -d --build
+docker compose exec laravel.test up -d --build
 ```
 *Note: The `--build` flag is recommended on the first run to ensure the Swoole extension is correctly compiled.*
 
@@ -54,8 +54,8 @@ Start the Docker containers (including Laravel Octane/Swoole, PostgreSQL, and Re
 Generate the application key and run migrations:
 
 ```bash
-./vendor/bin/sail artisan key:generate
-./vendor/bin/sail artisan migrate --seed
+docker compose exec laravel.test artisan key:generate
+docker compose exec laravel.test artisan migrate --seed
 ```
 
 ### 5. Install Frontend Dependencies & Build
@@ -63,8 +63,8 @@ Generate the application key and run migrations:
 Install Node.js dependencies and build the assets:
 
 ```bash
-./vendor/bin/sail npm install
-./vendor/bin/sail npm run build
+docker compose exec laravel.test npm install
+docker compose exec laravel.test npm run build
 ```
 
 ### 6. Access the Application
@@ -78,7 +78,7 @@ The server automatically starts when you run `sail up`.
 
 You can check the status:
 ```bash
-./vendor/bin/sail artisan octane:status
+docker compose exec laravel.test artisan octane:status
 ```
 
 ## 🛠 Development Usage
@@ -87,19 +87,19 @@ You can check the status:
 To enable hot-reloading for React/Inertia (so you don't have to build every time):
 
 ```bash
-./vendor/bin/sail npm run dev
+docker compose exec laravel.test npm run dev
 ```
 
 ### Running Commands
 You can run any Artisan, Composer, or NPM command via Sail:
 
 ```bash
-./vendor/bin/sail artisan migrate
-./vendor/bin/sail composer require ...
-./vendor/bin/sail npm install ...
+docker compose exec laravel.test artisan migrate
+docker compose exec laravel.test composer require ...
+docker compose exec laravel.test npm install ...
 ```
 
 ### Stopping the Environment
 ```bash
-./vendor/bin/sail down
+docker compose exec laravel.test down
 ```

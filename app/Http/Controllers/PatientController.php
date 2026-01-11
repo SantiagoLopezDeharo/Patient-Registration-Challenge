@@ -9,7 +9,7 @@ class PatientController extends Controller
     public function index()
     {
         return \Inertia\Inertia::render('home', [
-            'patients' => \App\Http\Resources\PatientResource::collection(\App\Models\Patient::latest()->get())
+            'patients' => \App\Http\Resources\PatientResource::collection(auth()->user()->patients()->latest()->get())
         ]);
     }
 
@@ -24,7 +24,7 @@ class PatientController extends Controller
 
         $path = $request->file('document_photo')->store('document_photos', 'public');
 
-        \App\Models\Patient::create([
+        auth()->user()->patients()->create([
             'full_name' => $validated['full_name'],
             'email' => $validated['email'],
             'phone_number' => $validated['phone_number'],

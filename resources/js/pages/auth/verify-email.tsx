@@ -1,6 +1,6 @@
 // Components
-import TextLink from '@/components/text-link';
 import { Button } from '@/components/button';
+import TextLink from '@/components/text-link';
 import AuthLayout from '@/layouts/auth-layout';
 import { logout } from '@/routes';
 import { send } from '@/routes/verification';
@@ -26,7 +26,9 @@ export default function VerifyEmail({ status }: { status?: string }) {
                 {({ processing }) => (
                     <>
                         <Button disabled={processing} variant="secondary">
-                            {processing && <Loader2 className="h-4 w-4 animate-spin" />}
+                            {processing && (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                            )}
                             Resend verification email
                         </Button>
 

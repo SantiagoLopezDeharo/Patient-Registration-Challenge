@@ -1,3 +1,4 @@
+import { AppHeaderUserMenu } from '@/components/app-header-user-menu';
 import CreatePatientDialog from '@/components/create-patient-dialog';
 import EmptyPatientState from '@/components/empty-patient-state';
 import PatientCard from '@/components/patient-card';
@@ -26,8 +27,9 @@ export default function Home({ patients }: { patients: { data: Patient[] } }) {
                                 </span>
                             </div>
                         </div>
-                        <div className="flex items-center">
+                        <div className="flex items-center gap-4">
                             <CreatePatientDialog />
+                            <AppHeaderUserMenu />
                         </div>
                     </div>
                 </div>
