@@ -11,7 +11,7 @@ export default function Register() {
         <GuestLayout>
             <Head title="Register" />
 
-            <div className="mb-4 text-center text-sm text-gray-900">
+            <div className="mb-4 text-center text-sm text-muted-foreground">
                 Create an account
             </div>
 
@@ -26,7 +26,7 @@ export default function Register() {
                             <div className="grid gap-2">
                                 <LabelPrimitive.Root
                                     htmlFor="name"
-                                    className="text-sm font-medium leading-none text-gray-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                    className="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                 >
                                     Name
                                 </LabelPrimitive.Root>
@@ -51,7 +51,7 @@ export default function Register() {
                             <div className="grid gap-2">
                                 <LabelPrimitive.Root
                                     htmlFor="email"
-                                    className="text-sm font-medium leading-none text-gray-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                    className="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                 >
                                     Email address
                                 </LabelPrimitive.Root>
@@ -75,7 +75,7 @@ export default function Register() {
                             <div className="grid gap-2">
                                 <LabelPrimitive.Root
                                     htmlFor="password"
-                                    className="text-sm font-medium leading-none text-gray-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                    className="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                 >
                                     Password
                                 </LabelPrimitive.Root>
@@ -99,7 +99,7 @@ export default function Register() {
                             <div className="grid gap-2">
                                 <LabelPrimitive.Root
                                     htmlFor="password_confirmation"
-                                    className="text-sm font-medium leading-none text-gray-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                    className="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                 >
                                     Confirm Password
                                 </LabelPrimitive.Root>
@@ -122,7 +122,7 @@ export default function Register() {
 
                             <button
                                 type="submit"
-                                className="inline-flex h-9 w-full items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white shadow hover:bg-gray-800 focus-visible:ring-1 focus-visible:ring-gray-950 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                                className="inline-flex h-9 w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:brightness-95 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
                                 tabIndex={5}
                                 disabled={processing}
                             >
@@ -137,7 +137,7 @@ export default function Register() {
                             Already have an account?{' '}
                             <Link
                                 href={login()}
-                                className="text-gray-900 underline underline-offset-4 hover:text-gray-700"
+                                className="text-foreground underline underline-offset-4 hover:text-primary"
                             >
                                 Log in
                             </Link>

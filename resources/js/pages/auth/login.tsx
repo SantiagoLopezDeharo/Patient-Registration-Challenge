@@ -23,7 +23,7 @@ export default function Login({
         <GuestLayout>
             <Head title="Log in" />
 
-            <div className="mb-4 text-center text-sm text-gray-900">
+            <div className="mb-4 text-center text-sm text-muted-foreground">
                 Log in to your account
             </div>
 
@@ -38,7 +38,7 @@ export default function Login({
                             <div className="grid gap-2">
                                 <LabelPrimitive.Root
                                     htmlFor="email"
-                                    className="text-sm leading-none font-medium text-gray-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                    className="text-sm leading-none font-medium text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                 >
                                     Email address
                                 </LabelPrimitive.Root>
@@ -64,7 +64,7 @@ export default function Login({
                                 <div className="flex items-center">
                                     <LabelPrimitive.Root
                                         htmlFor="password"
-                                        className="text-sm leading-none font-medium text-gray-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        className="text-sm leading-none font-medium text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                     >
                                         Password
                                     </LabelPrimitive.Root>
@@ -92,7 +92,7 @@ export default function Login({
                                         id="remember"
                                         name="remember"
                                         tabIndex={3}
-                                        className="peer h-4 w-4 shrink-0 rounded-sm border border-gray-900 ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-gray-900 data-[state=checked]:text-white"
+                                        className="peer h-4 w-4 shrink-0 rounded-sm border border-border ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
                                     >
                                         <CheckboxPrimitive.Indicator className="flex items-center justify-center text-current">
                                             <Check className="h-4 w-4" />
@@ -100,7 +100,7 @@ export default function Login({
                                     </CheckboxPrimitive.Root>
                                     <LabelPrimitive.Root
                                         htmlFor="remember"
-                                        className="text-sm leading-none font-medium text-gray-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        className="text-sm leading-none font-medium text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                     >
                                         Remember me
                                     </LabelPrimitive.Root>
@@ -109,7 +109,7 @@ export default function Login({
                                 {canResetPassword && (
                                     <Link
                                         href={request()}
-                                        className="text-sm text-gray-600 underline hover:text-gray-900"
+                                        className="text-sm text-muted-foreground underline hover:text-foreground"
                                         tabIndex={5}
                                     >
                                         Forgot password?
@@ -119,7 +119,7 @@ export default function Login({
 
                             <button
                                 type="submit"
-                                className="inline-flex h-9 w-full items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white shadow hover:bg-gray-800 focus-visible:ring-1 focus-visible:ring-gray-950 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                                className="inline-flex h-9 w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:brightness-95 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
                                 tabIndex={4}
                                 disabled={processing}
                             >
@@ -134,7 +134,7 @@ export default function Login({
                             Don&apos;t have an account?{' '}
                             <Link
                                 href={register()}
-                                className="text-gray-900 underline underline-offset-4 hover:text-gray-700"
+                                className="text-foreground underline underline-offset-4 hover:text-primary"
                             >
                                 Sign up
                             </Link>

@@ -3,6 +3,7 @@ import EmptyPatientState from '@/components/empty-patient-state';
 import InfiniteScrollSentinel from '@/components/infinite-scroll-sentinel';
 import PatientCard from '@/components/patient-card';
 import PatientSearchControls from '@/components/patient-search-controls';
+import ThemeToggle from '@/components/theme-toggle';
 import {
     type PatientSearchField,
     useInfinitePatients,
@@ -87,21 +88,22 @@ export default function Home({
     }, [loadMore]);
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-background">
             <Head title="Patient Registry" />
 
-            <nav className="border-b border-gray-200 bg-white shadow-sm">
+            <nav className="border-b border-border bg-card shadow-sm">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
-                                <span className="text-xl font-bold text-gray-900">
+                                <span className="text-xl font-bold text-foreground">
                                     Patient Registry
                                 </span>
                             </div>
                         </div>
                         <div className="flex items-center gap-4">
                             <CreatePatientDialog />
+                            <ThemeToggle />
                             <AppHeaderUserMenu />
                         </div>
                     </div>
@@ -119,7 +121,7 @@ export default function Home({
                             onSubmit={submitSearch}
                             onClear={clearSearch}
                         />
-                        <div className="mt-3 text-xs text-gray-500">
+                        <div className="mt-3 text-xs text-muted-foreground">
                             Showing {meta.total} result
                             {meta.total === 1 ? '' : 's'}
                         </div>
@@ -151,7 +153,7 @@ export default function Home({
                                             disabled={isLoadingMore}
                                             onVisible={onSentinelVisible}
                                         />
-                                        <div className="mt-4 text-center text-sm text-gray-500">
+                                        <div className="mt-4 text-center text-sm text-muted-foreground">
                                             {isLoadingMore
                                                 ? 'Loading more…'
                                                 : 'Scroll to load more'}

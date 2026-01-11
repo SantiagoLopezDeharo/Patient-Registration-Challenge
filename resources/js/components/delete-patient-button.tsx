@@ -50,7 +50,7 @@ export default function DeletePatientButton(
                 onMouseDown={(e) => e.stopPropagation()}
                 disabled={processing}
                 className={
-                    'inline-flex items-center gap-2 rounded-md bg-white px-2 py-1 text-xs text-red-600 hover:bg-red-50 ' +
+                    'inline-flex items-center gap-2 rounded-md bg-card px-2 py-1 text-xs text-destructive hover:bg-destructive/10 ' +
                     className
                 }
             >

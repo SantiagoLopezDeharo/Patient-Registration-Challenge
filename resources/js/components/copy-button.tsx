@@ -40,7 +40,7 @@ export default function CopyButton(props: Readonly<CopyButtonProps>) {
             aria-label={ariaLabel ?? `Copy ${text}`}
             onClick={handleClick}
             className={
-                'ml-2 inline-flex h-6 w-6 items-center justify-center rounded-md border border-transparent bg-white text-gray-400 hover:text-gray-600 focus:outline-none ' +
+                'ml-2 inline-flex h-6 w-6 items-center justify-center rounded-md border border-transparent bg-card text-muted-foreground hover:text-foreground focus:outline-none ' +
                 className
             }
             onMouseDown={(e) => e.stopPropagation()}

@@ -4,16 +4,41 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        {{-- Inline script to detect system dark mode preference and apply it immediately --}}
+        {{-- Inline script to apply persisted appearance before the app loads to avoid FOUC. --}}
         <script>
             (function() {
-                const appearance = '{{ $appearance ?? "system" }}';
+                try {
+                    var appearance = localStorage.getItem('appearance');
+                } catch (e) {
+                    var appearance = null;
+                }
 
-                if (appearance === 'system') {
-                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (appearance === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.style.colorScheme = 'dark';
+                    return;
+                }
 
-                    if (prefersDark) {
-                        document.documentElement.classList.add('dark');
+                if (appearance === 'light') {
+                    document.documentElement.classList.remove('dark');
+                    document.documentElement.style.colorScheme = 'light';
+                    return;
+                }
+
+                // fallback to server-provided appearance or system preference
+                var serverAppearance = '{{ $appearance ?? "system" }}';
+                if (serverAppearance === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.style.colorScheme = 'dark';
+                    return;
+                }
+
+                if (serverAppearance === 'system') {
+                    if (typeof globalThis !== 'undefined' && globalThis.matchMedia) {
+                        if (globalThis.matchMedia('(prefers-color-scheme: dark)').matches) {
+                            document.documentElement.classList.add('dark');
+                            document.documentElement.style.colorScheme = 'dark';
+                        }
                     }
                 }
             })();

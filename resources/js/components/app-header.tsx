@@ -30,6 +30,7 @@ import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-react';
 import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
+import ThemeToggle from './theme-toggle';
 
 const mainNavItems: NavItem[] = [
     {
@@ -220,6 +221,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                                 ))}
                             </div>
                         </div>
+                        <ThemeToggle />
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button
