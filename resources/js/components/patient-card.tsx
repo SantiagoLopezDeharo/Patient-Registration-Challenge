@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils';
 import { ChevronDown, ChevronUp, Mail, Phone } from 'lucide-react';
 import { useState } from 'react';
+import CopyButton from './copy-button';
 
 interface Patient {
     id: number;
@@ -90,7 +91,7 @@ export default function PatientCard({
                 <div className="mt-3 h-px w-full bg-gray-100 sm:mt-4" />
 
                 <div className="mt-3 space-y-2 text-xs text-gray-700 sm:mt-4 sm:space-y-3 sm:text-sm">
-                    <div className="flex items-start gap-2">
+                    <div className="flex items-center gap-2">
                         <Mail
                             size={16}
                             className="mt-0.5 shrink-0 text-gray-400"
@@ -98,8 +99,12 @@ export default function PatientCard({
                         <span className="min-w-0 break-words">
                             {patient.email}
                         </span>
+                        <CopyButton
+                            text={patient.email}
+                            ariaLabel="Copy email"
+                        />
                     </div>
-                    <div className="flex items-start gap-2">
+                    <div className="flex items-center gap-2">
                         <Phone
                             size={16}
                             className="mt-0.5 shrink-0 text-gray-400"
@@ -107,6 +112,10 @@ export default function PatientCard({
                         <span className="min-w-0 break-words">
                             {patient.phone_number}
                         </span>
+                        <CopyButton
+                            text={patient.phone_number}
+                            ariaLabel="Copy phone number"
+                        />
                     </div>
                 </div>
 
