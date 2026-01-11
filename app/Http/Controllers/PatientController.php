@@ -32,7 +32,7 @@ class PatientController extends Controller
         $patientsQuery = auth()->user()->patients()->latest();
 
         if ($search !== '') {
-            $patientsQuery->where($field, 'like', '%' . $search . '%');
+            $patientsQuery->where($field, 'ilike', '%' . $search . '%');
         }
 
         $patients = $patientsQuery->paginate(perPage: $perPage)->withQueryString();

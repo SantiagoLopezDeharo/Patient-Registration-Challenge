@@ -25,6 +25,7 @@ export function useInfinitePatients<T>(
         setLoadError(null);
     }, [
         initial.data,
+        initial.meta,
         initial.meta.current_page,
         initial.meta.last_page,
         initial.meta.total,

@@ -28,7 +28,7 @@ export default function CopyButton(props: Readonly<CopyButtonProps>) {
             setTimeout(() => setCopied(false), 1500);
         } catch (err) {
             // report error for visibility
-            // eslint-disable-next-line no-console
+             
             console.error('copy failed', err);
             setCopied(false);
         }

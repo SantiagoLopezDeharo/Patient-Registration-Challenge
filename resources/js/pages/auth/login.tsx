@@ -9,24 +9,16 @@ import * as LabelPrimitive from '@radix-ui/react-label';
 import { Check, Loader2 } from 'lucide-react';
 
 interface LoginProps {
-    status?: string;
     canResetPassword: boolean;
-    canRegister: boolean;
 }
 
-export default function Login({
-    status,
-    canResetPassword,
-    canRegister,
-}: LoginProps) {
+export default function Login({ canResetPassword }: LoginProps) {
     return (
         <GuestLayout>
             <Head title="Log in" />
-
             <div className="mb-4 text-center text-sm text-muted-foreground">
                 Log in to your account
             </div>
-
             <Form
                 {...store.form()}
                 resetOnSuccess={['password']}
@@ -59,7 +51,6 @@ export default function Login({
                                     </div>
                                 )}
                             </div>
-
                             <div className="grid gap-2">
                                 <div className="flex items-center">
                                     <LabelPrimitive.Root
@@ -85,7 +76,6 @@ export default function Login({
                                     </div>
                                 )}
                             </div>
-
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center space-x-3">
                                     <CheckboxPrimitive.Root
@@ -105,7 +95,6 @@ export default function Login({
                                         Remember me
                                     </LabelPrimitive.Root>
                                 </div>
-
                                 {canResetPassword && (
                                     <Link
                                         href={request()}
@@ -116,7 +105,6 @@ export default function Login({
                                     </Link>
                                 )}
                             </div>
-
                             <button
                                 type="submit"
                                 className="inline-flex h-9 w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:brightness-95 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
@@ -129,7 +117,6 @@ export default function Login({
                                 Log in
                             </button>
                         </div>
-
                         <div className="text-center text-sm text-muted-foreground">
                             Don&apos;t have an account?{' '}
                             <Link

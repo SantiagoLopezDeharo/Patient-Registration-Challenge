@@ -1,5 +1,5 @@
 import { CloudUpload } from 'lucide-react';
-import { DragEvent, useEffect, useRef, useState } from 'react';
+import { DragEvent, useLayoutEffect, useRef, useState } from 'react';
 
 interface DragDropFileInputProps {
     id: string;
@@ -70,18 +70,18 @@ export default function DragDropFileInput({
         }
     };
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (!value) {
-            setPreviewUrl(null);
+            Promise.resolve().then(() => setPreviewUrl(null));
             return;
         }
 
         const url = URL.createObjectURL(value);
-        setPreviewUrl(url);
+        Promise.resolve().then(() => setPreviewUrl(url));
 
         return () => {
             URL.revokeObjectURL(url);
-            setPreviewUrl(null);
+            Promise.resolve().then(() => setPreviewUrl(null));
         };
     }, [value]);
 

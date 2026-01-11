@@ -82,7 +82,7 @@ Worker counts are configured via `.env` and applied by `compose.yaml`:
 
 You can check the status:
 ```bash
-docker compose exec laravel.test artisan octane:status
+docker compose exec laravel.test php artisan octane:status
 ```
 
 ## 🛠 Development Usage

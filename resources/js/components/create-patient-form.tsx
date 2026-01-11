@@ -121,12 +121,14 @@ export default function CreatePatientForm({
         field: K,
         value: (typeof data)[K],
     ) => {
-        clearErrors(field as any);
-        setData(field, value as any);
+        clearErrors(field);
+        setData(field, value);
         setClientErrors((prev) => {
             const next = validate({ ...data, [field]: value } as typeof data);
             if (!prev[field] && !next[field]) return prev;
-            const { [field]: _removed, ...rest } = prev;
+            const rest = Object.fromEntries(
+                Object.entries(prev).filter(([k]) => k !== field),
+            );
             return next[field] ? { ...rest, [field]: next[field] } : rest;
         });
     };
