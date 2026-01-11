@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Patient;
 use App\Notifications\PatientRegistered;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
+use Laravel\Octane\Facades\Octane;
 use Throwable;
 
 class PatientController extends Controller
@@ -83,9 +86,36 @@ class PatientController extends Controller
                 'document_photo_path' => '/storage/' . $path,
             ]);
 
-            $patient->notify(new PatientRegistered());
-
             DB::commit();
+
+            $patientId = $patient->getKey();
+
+            if (isset($_SERVER['LARAVEL_OCTANE'])) {
+                Log::info('PatientRegistered: dispatching to Octane task worker', ['patient_id' => $patientId]);
+                Octane::tasks()->dispatch([
+                    function () use ($patientId) {
+                        try {
+                            Log::info('PatientRegistered: Octane task started', ['patient_id' => $patientId]);
+                            $patient = Patient::query()->with('user')->find($patientId);
+
+                            if ($patient !== null) {
+                                $patient->notify(new PatientRegistered());
+                                Log::info('PatientRegistered: Octane task finished notify', ['patient_id' => $patientId]);
+                            } else {
+                                Log::warning('PatientRegistered: patient not found in Octane task', ['patient_id' => $patientId]);
+                            }
+                        } catch (Throwable $e) {
+                            report($e);
+                            Log::error('PatientRegistered: exception in Octane task', ['patient_id' => $patientId, 'error' => $e->getMessage()]);
+                        }
+                    },
+                ]);
+            } else {
+                Log::info('PatientRegistered: sending synchronously', ['patient_id' => $patientId]);
+                $patient->notify(new PatientRegistered());
+            }
+
+            return redirect()->back();
         } catch (Throwable $e) {
             DB::rollBack();
 
@@ -100,7 +130,5 @@ class PatientController extends Controller
                 ->withErrors(['error' => 'Unable to register patient right now. Please try again.'])
                 ->withInput();
         }
-
-        return redirect()->back();
     }
 }
