@@ -29,7 +29,7 @@ export default function PatientCard({
         >
             <div
                 className={cn(
-                    'relative h-full w-full rounded-2xl border border-border bg-card shadow-md transition duration-300 hover:scale-[1.04] hover:shadow-xl focus-visible:ring-2 focus-visible:ring-ring/10 focus-visible:outline-none',
+                    'relative h-full w-full rounded-2xl border border-border bg-card shadow-md transition duration-300 hover:shadow-xl focus-visible:ring-2 focus-visible:ring-ring/10 focus-visible:outline-none',
                     'transform-gpu transition-transform duration-500',
                     expanded && 'ring-2 ring-gray-900/10',
                     expanded ? 'rotate-y-180' : 'rotate-y-0',
@@ -146,6 +146,9 @@ export default function PatientCard({
                 .rotate-y-0 { transform: rotateY(0deg); }
                 .rotate-y-180 { transform: rotateY(180deg); }
                 .backface-hidden { backface-visibility: hidden; }
+                .hover {
+                    box-shadow: 0 0 10px 2px rgba(0, 123, 255, 0.6);
+                }
             `}</style>
         </button>
     );
